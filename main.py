@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
-from home_sekolah import sekolah_home
-from home_siswa import siswa_home
+from home import sekolah_home
+from home import siswa_home
 from streamlit_option_menu import option_menu
 import sqlite3
 conn = sqlite3.connect('beasiswa.db', check_same_thread=False)
