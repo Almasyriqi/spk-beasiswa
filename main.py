@@ -1,4 +1,7 @@
 import streamlit as st
+import pandas as pd
+from home_sekolah import sekolah_home
+from home_siswa import siswa_home
 from streamlit_option_menu import option_menu
 import sqlite3
 conn = sqlite3.connect('beasiswa.db', check_same_thread=False)
@@ -21,10 +24,10 @@ def edit_password_handler(email, currentPassword, newPassword):
         
 
 headerSection = st.container()
-mainSection = st.container()
 loginSection = st.container()
 logOutSection = st.container()
 sidebarSection = st.container()
+mainSection = st.container()
 editPasswordSection = st.container()
 
 def show_sidebar():
@@ -40,7 +43,7 @@ def show_sidebar():
             )
     
         if selected == "Home":
-            st.title("Halaman Home")
+            show_main_page()  
         elif selected == "Input":
             st.title("Halaman Input")
         elif selected == "Hasil":
@@ -50,16 +53,18 @@ def show_sidebar():
 
 def show_main_page():
     with mainSection:
-        st.title("Main Page")
-        st.session_state['role']
- 
+        if st.session_state['role'] == 'siswa':
+            siswa_home()
+        else:
+            sekolah_home()
+        
 def LoggedOut_Clicked():
     st.session_state['loggedIn'] = False
     
 def show_logout_page():
     loginSection.empty();
     with logOutSection:
-        st.button ("Log Out", key="logout", on_click=LoggedOut_Clicked)
+        st.sidebar.button ("Log Out", key="logout", on_click=LoggedOut_Clicked)
     
 def show_login_page():
     with loginSection:
@@ -99,6 +104,5 @@ with headerSection:
         if st.session_state['loggedIn']:
             show_logout_page()
             show_sidebar()    
-            show_main_page()  
         else:
             show_login_page()
