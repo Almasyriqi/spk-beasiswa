@@ -122,11 +122,12 @@ def sekolah_home():
                     Pada template pengisian alternatif sama seperti contoh pada tabel 6 (Jika ingin menambah alternatif atau calon penerima beasiswa
                     dapat langsung menambah ke baris selanjutnya, setelah alternatif terakhir).
                     
-                5. Jika sudah, dapat masuk ke halaman input untuk upload file csv yang telah diedit sesuai kebutuhan maka sistem akan secara otomatis
-                    menghitung menggunakan metode SPK yaitu MOORA. 
+                5. Jika sudah, dapat masuk ke halaman input untuk upload file csv yang telah diedit sesuai kebutuhan. 
+                    Kemudian, klik button Analisis MOORA maka sistem akan secara otomatis
+                    menghitung menggunakan metode SPK MOORA dan menampilkan hasil perangkingan. 
                 
                 6. Langkah tambahan pada saat edit template csv, jika ingin custom kriteria dapat langsung menambah kolom kriteria
                     atau mengurangi kolom kriteria dengan diikuti mengisi nilai atribut, bobot, dan nilai kriteria setiap alternatif 
                     sesuai kriteria yang ditentukan.
                  """)
-    st.write("#### Notes : Tidak boleh mengosongi input, mengubah template input atau mengisi input yang tidak sesuai dengan cara penggunaan karena dapat menyebabkan error pada sistem.")
+    st.write("#### Notes : Saat input file CSV tidak boleh mengosongi input, mengubah template input atau mengisi input yang tidak sesuai dengan cara penggunaan karena dapat menyebabkan error pada sistem.")

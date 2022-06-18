@@ -2,11 +2,13 @@ import streamlit as st
 import pandas as pd
 from home import sekolah_home
 from home import siswa_home
+from moora import metodeMoora
 from streamlit_option_menu import option_menu
 import sqlite3
 conn = sqlite3.connect('beasiswa.db', check_same_thread=False)
 c = conn.cursor()
 
+# Fungsi untuk eksekusi query sql database
 def login_user(email, password):
     c.execute('SELECT * FROM users WHERE email = ? AND password=?', (email, password))
     data = c.fetchall()
@@ -22,13 +24,14 @@ def edit_password_handler(email, currentPassword, newPassword):
     else:
         st.error("email dan password salah") 
         
-
+# Membuat section container halaman
 headerSection = st.container()
 loginSection = st.container()
 logOutSection = st.container()
 sidebarSection = st.container()
 mainSection = st.container()
 editPasswordSection = st.container()
+inputSection = st.container()
 
 def show_sidebar():
     if st.session_state['role'] == 'siswa':
@@ -45,7 +48,7 @@ def show_sidebar():
         if selected == "Home":
             show_main_page()  
         elif selected == "Input":
-            st.title("Halaman Input")
+            input_page()
         elif selected == "Hasil":
             st.title("Hasil")
         elif selected == "Edit Password":
@@ -83,6 +86,18 @@ def show_login_page():
                     st.session_state['loggedIn'] = False
                     st.error('email dan password salah')
                     
+def input_page():
+    with inputSection:
+        st.subheader("Input Data CSV")
+        uploaded_file = st.file_uploader("Choose CSV file", type=['csv'])
+        if uploaded_file is not None:
+            dataframe = pd.read_csv(uploaded_file)
+            st.write(dataframe)
+            
+            if st.button("Analisis MOORA"):
+                hasil = metodeMoora(dataframe)
+                st.download_button(label='Download Hasil CSV', data=hasil.to_csv(index=False), file_name="output.csv", mime='text/csv')
+                    
 def edit_password_page():
     with editPasswordSection:
         st.subheader("Edit Password")
@@ -95,7 +110,7 @@ def edit_password_page():
 
 with headerSection:
     st.title("Sistem Penentuan Beasiswa SMKN 1 Ciomas Kabupaten Bogor")
-    #first run will have nothing in session_state
+
     if 'loggedIn' not in st.session_state:
         st.session_state['loggedIn'] = False
         st.session_state['role'] = ''
