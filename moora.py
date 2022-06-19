@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import sqlite3
-
 
 def metodeMoora(dataframe ):
     st.write("### Normalisasi Data")
@@ -28,56 +26,31 @@ def metodeMoora(dataframe ):
             data_optimasi[i,j] = data_norm[i,j] * bobot[j]
     df_optimasi = pd.DataFrame(data_optimasi, columns=kriteria[1:])
     st.dataframe(df_optimasi)
-    
-    
+        
     # Menghitung Yi
-    
-    temp_max = []
-    temp_min = []
-    result_max = 0
-    result_min = 0
-    for x in range(data_optimasi.shape[0]):
-        for y in range(data_optimasi.shape[1]):
-            if (y == 0 or y == 3 or y == 4):
-                result_max = result_max + data_optimasi[x,y]
-            if(y == 1 or y == 2):
-                result_min = result_min + data_optimasi[x,y]
-        temp_max.append(result_max)
-        temp_min.append(result_min)
-        result_max = 0  
-        result_min = 0
+    temp_max = [0] * data_optimasi.shape[0]
+    temp_min = [0] * data_optimasi.shape[0]
 
-    result_yi = []
-    for i in range(len(temp_max)):
-        result_yi.append(temp_max[i] - temp_min[i])
+    for y in range(data_optimasi.shape[1]):
+        for x in range(data_optimasi.shape[0]):
+            if (atribut[y] == 1):
+                temp_max[x] += data_optimasi[x,y]
+            else:
+                temp_min[x] += data_optimasi[x,y]
 
+    result_yi = [0] * data_optimasi.shape[0]
+    for i in range(data_optimasi.shape[0]):
+        result_yi[i] = temp_max[i] - temp_min[i]
     
     # Perangkingan
-    list_alternatif = []
-    for x in dataframe.iloc[2: , 0].values:
-        list_alternatif.append(str(x))
+    list_alternatif = dataframe.iloc[2:,0].values
+    nilai = np.stack((list_alternatif, result_yi), axis=1)
+    rank = list(range(1,list_alternatif.shape[0]+1))
+    df_ranking = pd.DataFrame(nilai, columns=['Alternatif', 'Yi'])
+    df_ranking = df_ranking.sort_values("Yi", ascending=False)
+    df_ranking['Ranking'] = rank
     
-    my_dict = dict()
-    count = 0
-    for value in result_yi:
-        my_dict[list_alternatif[count]] = value
-        count = count + 1
+    st.write("### Hasil Perangkingan Metode MOORA")
+    st.dataframe(df_ranking)
     
-    perangkingan = sorted(my_dict.items(), key=lambda x: x[1], reverse=True)
-    
-    
-    #Hasil Perangkingan adalah array
-    """
-    [('Dimas Permana', 1.4471299133366142), 
-    ('Gadis Idhani', 1.2667837633596557), 
-    ('Abdul Hakim', 0.8248420251180635), 
-    ('Indah Permata Sari', 0.7207325951250203), 
-    ('Desi Ismiyati', 0.22541412860488075), 
-    ('Ahmad Zaelani', -0.05904145136512051), 
-    ('Faridz Dwi Nurfalah', -0.5131348172711157),
-     ('Adi Wiguna', -1.2740132361032235), 
-     ('Faisal Hidayat', -1.6432877090412217),
-      ('Hariono Yusuf', -1.6432877090412217)]
-    """
-    
-    return perangkingan # return datanya menggunakan data hasil moora yang telah di ranking
+    return df_ranking # return datanya menggunakan data hasil moora yang telah di ranking
