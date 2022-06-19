@@ -8,6 +8,7 @@ import sqlite3
 conn = sqlite3.connect('beasiswa.db', check_same_thread=False)
 c = conn.cursor()
 
+
 # Fungsi untuk eksekusi query sql database
 def login_user(email, password):
     c.execute('SELECT * FROM users WHERE email = ? AND password=?', (email, password))
@@ -93,7 +94,6 @@ def input_page():
         if uploaded_file is not None:
             dataframe = pd.read_csv(uploaded_file)
             st.write(dataframe)
-            
             if st.button("Analisis MOORA"):
                 hasil = metodeMoora(dataframe)
                 st.download_button(label='Download Hasil CSV', data=hasil.to_csv(index=False), file_name="output.csv", mime='text/csv')
