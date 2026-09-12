@@ -29,7 +29,8 @@ SMK Negeri 1 Ciomas, Kabupaten Bogor
 | [🚀 Fitur](#-fitur) | [📊 Kriteria Penilaian](#-kriteria-penilaian) |
 | [🛠️ Teknologi](#️-teknologi) | [📥 Format File Input](#-format-file-input) |
 | [📂 Struktur Proyek](#-struktur-proyek) | [🗄️ Skema Database](#️-skema-database) |
-| [⚡ Instalasi & Menjalankan](#-instalasi--menjalankan) | [📖 Panduan Penggunaan](#-panduan-penggunaan) |
+| [📚 Dokumentasi](#-dokumentasi) | [📖 Panduan Penggunaan](#-panduan-penggunaan) |
+| [⚡ Instalasi & Menjalankan](#-instalasi--menjalankan) | [📌 Catatan Pengembangan](#-catatan-pengembangan) |
 | [🔑 Akun Login](#-akun-login) | [👥 Tim Pengembang](#-tim-pengembang) |
 
 ---
@@ -105,11 +106,31 @@ spk-beasiswa/
 ├── 🗄️ beasiswa.db              # Basis data SQLite (tabel `users` & `hasil`)
 ├── 📊 template.csv              # Template berkas input beserta contoh data alternatif
 ├── 📦 requirements.txt          # Daftar dependency Python
+├── 📚 docs/
+│   ├── README.md                # Indeks dokumentasi
+│   ├── SRS.md                   # Spesifikasi kebutuhan perangkat lunak (IEEE 830-1998)
+│   ├── FITUR.md                 # Daftar fitur, status implementasi, dan roadmap
+│   └── FLOWMAP.md               # Flowmap dokumen dan flowchart setiap proses
 ├── ⚙️ .streamlit/
 │   └── config.toml             # Konfigurasi tema aplikasi (dark mode)
 └── 🐳 .devcontainer/
     └── devcontainer.json       # Konfigurasi Codespaces / Dev Container (port 8501)
 ```
+
+---
+
+## 📚 Dokumentasi
+
+Dokumentasi teknis lengkap tersedia pada folder [`docs/`](docs/):
+
+| Dokumen | Isi |
+|---|---|
+| **[📋 SRS](docs/SRS.md)** | Spesifikasi Kebutuhan Perangkat Lunak (IEEE 830-1998) — kebutuhan fungsional & non-fungsional, kebutuhan data, matriks keterlacakan |
+| **[🚀 Daftar Fitur](docs/FITUR.md)** | 17 fitur ber-ID dengan status implementasi, cara pakai, keterbatasan, dan roadmap |
+| **[🗺️ Flowmap](docs/FLOWMAP.md)** | Flowmap dokumen bergaya *swimlane*, empat flowchart proses, dan diagram sekuens sistem |
+| **[📚 Indeks](docs/README.md)** | Panduan navigasi dan sistem penomoran dokumentasi |
+
+> 🔍 Setiap kebutuhan dan fitur dilengkapi rujukan `berkas:baris`, sehingga kesesuaian dokumen dengan kode dapat diperiksa langsung.
 
 ---
 
