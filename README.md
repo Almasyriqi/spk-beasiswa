@@ -108,9 +108,14 @@ spk-beasiswa/
 ├── 📦 requirements.txt          # Daftar dependency Python
 ├── 📚 docs/
 │   ├── README.md                # Indeks dokumentasi
+│   ├── MANUAL.md                # Buku panduan pemakaian bergambar
+│   ├── img/                     # Screenshot untuk manual (21 berkas)
 │   ├── SRS.md                   # Spesifikasi kebutuhan perangkat lunak (IEEE 830-1998)
 │   ├── FITUR.md                 # Daftar fitur, status implementasi, dan roadmap
 │   └── FLOWMAP.md               # Flowmap dokumen dan flowchart setiap proses
+├── 🛠️ tools/
+│   ├── capture_manual.py        # Pengambil screenshot otomatis (Playwright)
+│   └── README.md                # Cara menjalankannya
 ├── ⚙️ .streamlit/
 │   └── config.toml             # Konfigurasi tema aplikasi (dark mode)
 └── 🐳 .devcontainer/
@@ -127,6 +132,7 @@ Dokumentasi teknis lengkap tersedia pada folder [`docs/`](docs/):
 |---|---|
 | **[📋 SRS](docs/SRS.md)** | Spesifikasi Kebutuhan Perangkat Lunak (IEEE 830-1998) — kebutuhan fungsional & non-fungsional, kebutuhan data, matriks keterlacakan |
 | **[🚀 Daftar Fitur](docs/FITUR.md)** | 17 fitur ber-ID dengan status implementasi, cara pakai, keterbatasan, dan roadmap |
+| **[📖 Manual Book](docs/MANUAL.md)** | Panduan pemakaian bergambar — 21 screenshot aplikasi, langkah demi langkah untuk pihak sekolah dan siswa |
 | **[🗺️ Flowmap](docs/FLOWMAP.md)** | Flowmap dokumen bergaya *swimlane*, empat flowchart proses, dan diagram sekuens sistem |
 | **[📚 Indeks](docs/README.md)** | Panduan navigasi dan sistem penomoran dokumentasi |
 

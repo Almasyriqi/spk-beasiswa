@@ -7,7 +7,7 @@
 
 <br/>
 
-![Dokumen](https://img.shields.io/badge/dokumen-3-blue?style=flat-square)
+![Dokumen](https://img.shields.io/badge/dokumen-4-blue?style=flat-square)
 ![Bahasa](https://img.shields.io/badge/bahasa-Indonesia-red?style=flat-square)
 ![Format](https://img.shields.io/badge/format-Markdown-000000?style=flat-square&logo=markdown)
 
@@ -22,6 +22,7 @@
 | **[📋 SRS.md](SRS.md)** | Spesifikasi Kebutuhan Perangkat Lunak dengan struktur **IEEE 830-1998**: pendahuluan, deskripsi umum, kebutuhan fungsional & non-fungsional, kebutuhan data, matriks keterlacakan, serta catatan implementasi | Lampiran laporan, acuan pengembangan, dasar penyusunan kasus uji |
 | **[🚀 FITUR.md](FITUR.md)** | Daftar 17 fitur ber-ID (`FT-xx`) dengan status, aktor, halaman, cara pakai, keterbatasan, rujukan kode, dan roadmap | Memahami kemampuan sistem dari sudut pandang pengguna |
 | **[🗺️ FLOWMAP.md](FLOWMAP.md)** | Flowmap dokumen bergaya *swimlane* antar entitas, narasi alur 18 langkah, empat flowchart proses, dan diagram sekuens sistem | Memahami alur kerja sistem, bahan presentasi dan laporan |
+| **[📖 MANUAL.md](MANUAL.md)** | Buku panduan pemakaian bergambar: 21 screenshot aplikasi yang sesungguhnya, langkah demi langkah untuk pihak sekolah dan siswa, rujukan singkat, dan penyelesaian masalah | Pengguna akhir — petugas sekolah dan siswa |
 
 ---
 
@@ -30,6 +31,7 @@
 | Kebutuhan Anda | Dokumen yang dibaca |
 |---|---|
 | 🔰 Baru mengenal proyek ini | [README proyek](../README.md) → [FITUR.md](FITUR.md) |
+| 🖱️ Akan memakai aplikasinya | [MANUAL.md](MANUAL.md) — panduan bergambar langkah demi langkah |
 | 🏫 Ingin tahu apa yang bisa dilakukan sistem | [FITUR.md](FITUR.md) |
 | 🔍 Ingin memahami alur kerja sistem | [FLOWMAP.md](FLOWMAP.md) |
 | 📐 Menyusun laporan atau skripsi | [SRS.md](SRS.md) + [FLOWMAP.md](FLOWMAP.md) |

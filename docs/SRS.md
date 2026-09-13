@@ -321,7 +321,7 @@ Sistem tidak berinteraksi langsung dengan perangkat keras khusus. Kebutuhan mini
 | **Alur** | 1. Pengguna mengisi surel dan kata sandi · 2. Pengguna menekan tombol `Login` · 3. Sistem menjalankan kueri `SELECT` dengan pasangan surel dan kata sandi · 4. Bila ditemukan, sistem menyimpan status `loggedIn` dan `role` pada `st.session_state` · 5. Bila tidak ditemukan, sistem menampilkan pesan galat |
 | **Pascakondisi** | Sesi terbentuk beserta peran pengguna, atau pesan galat tampil tanpa perubahan sesi |
 | **Prioritas** | Wajib |
-| **Status** | ✅ Terimplementasi |
+| **Status** | ⚠️ Sebagian — tombol `Login` perlu ditekan dua kali sebelum menu muncul (lihat KI-10) |
 | **Rujukan Kode** | `main.py:13-16`, `main.py:120-135`, `main.py:189-200` |
 
 ### SRS-F-02 · Otorisasi Menu Berbasis Peran
@@ -675,7 +675,7 @@ Setiap kebutuhan fungsional dipetakan ke fitur pada [FITUR.md](FITUR.md), berkas
 
 | Kebutuhan | Fitur | Berkas & baris | Status | Temuan |
 |---|---|---|:--:|:--:|
-| SRS-F-01 Autentikasi | FT-01 | `main.py:13-16`, `120-135`, `189-200` | ✅ | — |
+| SRS-F-01 Autentikasi | FT-01 | `main.py:13-16`, `120-135`, `189-200` | ⚠️ | KI-10 |
 | SRS-F-02 Otorisasi peran | FT-02 | `main.py:83-102`, `105-110` | ✅ | — |
 | SRS-F-03 Logout | FT-03 | `main.py:112-118` | ⚠️ | KI-05 |
 | SRS-F-04 Unggah CSV | FT-04 | `main.py:137-143` | ✅ | KI-03 |
@@ -696,8 +696,8 @@ Setiap kebutuhan fungsional dipetakan ke fitur pada [FITUR.md](FITUR.md), berkas
 
 | Status | Jumlah | Kebutuhan |
 |---|:--:|---|
-| ✅ Terimplementasi | 13 | SRS-F-01, 02, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 16 |
-| ⚠️ Sebagian | 1 | SRS-F-03 |
+| ✅ Terimplementasi | 12 | SRS-F-02, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 16 |
+| ⚠️ Sebagian | 2 | SRS-F-01, 03 |
 | 📋 Belum | 2 | SRS-F-14, 15 |
 | **Total** | **16** | — |
 
@@ -722,6 +722,7 @@ Bab ini mencatat selisih antara kebutuhan yang dirumuskan dan kondisi kode saat 
 | **KI-07** | Jumlah penerima yang diumumkan dipatok `5` pada kode | `main.py:173` | Kuota penerima tidak dapat diubah tanpa menyunting kode | 🟡 Rendah | ⏳ Terbuka |
 | **KI-08** | `requirements.txt` tidak mencantumkan `pandas` dan `numpy`, keduanya ikut sebagai dependensi transitif Streamlit | `requirements.txt` | Pemasangan dapat gagal bila versi Streamlit diganti | 🟡 Rendah | ⏳ Terbuka |
 | **KI-09** | Singkatan rating kecocokan memakai `(T)` untuk "Baik" dan `(ST)` untuk "Sangat Baik", mengikuti pola tabel tingkat kepentingan | `home.py:58-59` | Ketidakkonsistenan label pada antarmuka | 🟢 Kosmetik | ⏳ Terbuka |
+| **KI-10** | Tombol `Login` harus ditekan **dua kali**. Blok `headerSection` sudah memutuskan cabang `show_login_page()` sebelum penekanan tombol sempat mengubah `loggedIn`, sehingga `show_sidebar()` tidak ikut dijalankan pada rerun yang sama | `main.py:189-200`, `main.py:120-135` | Pengguna melihat pesan `Logged In As ...` tetapi menu tidak muncul, sehingga mengira login gagal | 🟠 Sedang | ⏳ Terbuka |
 
 > 📌 **Koreksi atas KI-01.** Pada penyusunan dokumen versi 1.0, temuan ini dinyatakan dapat membuat urutan peringkat salah. Pengujian langsung terhadap `metodeMoora` membuktikan pernyataan tersebut **keliru**: karena `dataframe.iloc[2:,0].values` menghasilkan array bertipe `object` (bukan teks), `np.stack` mempertahankan nilai `Yi` sebagai bilangan, sehingga `sort_values` tetap mengurutkan secara numerik dan peringkat yang dihasilkan benar. Diverifikasi pada pandas 1.5.3/NumPy 1.24.4 maupun pandas 3.0.5/NumPy 2.4.6 dengan data `template.csv` dan beberapa kasus tepi. Yang tersisa hanyalah persoalan ketepatan tipe, sehingga prioritasnya diturunkan dari 🔴 Tinggi menjadi 🟡 Rendah. Perbaikan tetap diterapkan agar kolom `Yi` bertipe `float64` dan tidak bergantung pada aturan promosi tipe NumPy.
 
@@ -730,7 +731,7 @@ Bab ini mencatat selisih antara kebutuhan yang dirumuskan dan kondisi kode saat 
 | Urutan | Temuan | Alasan |
 |:--:|---|---|
 | 1 | **KI-02** | Risiko keamanan terbesar; memerlukan migrasi data kata sandi yang sudah ada |
-| 2 | **KI-03** | Berdampak langsung pada pengalaman pengguna dan mencegah kegagalan saat data tidak sesuai |
+| 2 | **KI-03**, **KI-10** | Berdampak langsung pada pengalaman pengguna: berkas yang tidak sesuai menimbulkan galat mentah, dan login tampak gagal padahal berhasil |
 | 3 | **KI-04**, **KI-08** | Perbaikan kecil dengan cakupan terbatas |
 | 4 | **KI-05**, **KI-06**, **KI-07**, **KI-09** | Peningkatan mutu tanpa urgensi |
 | — | ~~**KI-01**~~ | Sudah diperbaiki — lihat catatan koreksi pada 5.1 |
@@ -742,6 +743,7 @@ Bab ini mencatat selisih antara kebutuhan yang dirumuskan dan kondisi kode saat 
 | Versi | Tanggal | Perubahan | Penyusun |
 |:---:|---|---|---|
 | 1.0 | 2026-09-12 | Penyusunan awal dokumen berdasarkan pembacaan kode sumber pada commit `e1e6a19` | Tim Pengembang |
+| 1.2 | 2026-09-13 | Penambahan KI-10 (tombol Login perlu ditekan dua kali), ditemukan saat penelusuran aplikasi dengan peramban untuk penyusunan `MANUAL.md` · SRS-F-01 ✅ → ⚠️ | Tim Pengembang |
 | 1.1 | 2026-09-13 | Koreksi KI-01 setelah pengujian langsung: urutan peringkat ternyata sudah benar, prioritas diturunkan ke 🟡 Rendah dan temuan ditutup setelah tipe kolom `Yi` diperbaiki · SRS-F-07 ⚠️ → ✅ · penyesuaian rujukan baris `moora.py` | Tim Pengembang |
 
 ---

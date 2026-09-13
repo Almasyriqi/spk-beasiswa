@@ -8,7 +8,7 @@
 <br/>
 
 ![Fitur](https://img.shields.io/badge/total%20fitur-17-blue?style=flat-square)
-![Terimplementasi](https://img.shields.io/badge/terimplementasi-15-success?style=flat-square)
+![Terimplementasi](https://img.shields.io/badge/terimplementasi-14-success?style=flat-square)
 ![Belum](https://img.shields.io/badge/belum-2-lightgrey?style=flat-square)
 
 </div>
@@ -35,8 +35,8 @@ Dokumen ini memandang sistem dari sudut pandang **pengguna**: apa yang dapat dil
 
 | Lambang | Arti | Jumlah |
 |:--:|---|:--:|
-| ✅ | **Tersedia** — fitur dapat dipakai sebagaimana dijelaskan | 15 |
-| ⚠️ | **Sebagian** — fitur dapat dipakai namun memiliki keterbatasan yang diketahui | 0 |
+| ✅ | **Tersedia** — fitur dapat dipakai sebagaimana dijelaskan | 14 |
+| ⚠️ | **Sebagian** — fitur dapat dipakai namun memiliki keterbatasan yang diketahui | 1 |
 | 📋 | **Belum tersedia** — fitur direncanakan, belum diimplementasikan | 2 |
 | | **Total** | **17** |
 
@@ -44,7 +44,7 @@ Dokumen ini memandang sistem dari sudut pandang **pengguna**: apa yang dapat dil
 
 | Modul | Jumlah | ✅ | ⚠️ | 📋 |
 |---|:--:|:--:|:--:|:--:|
-| 🔐 Autentikasi & Sesi | 3 | 3 | — | — |
+| 🔐 Autentikasi & Sesi | 3 | 2 | 1 | — |
 | 📥 Manajemen Data | 3 | 2 | — | 1 |
 | 🧮 Perhitungan MOORA | 4 | 4 | — | — |
 | 📢 Publikasi Hasil | 3 | 3 | — | — |
@@ -57,7 +57,7 @@ Dokumen ini memandang sistem dari sudut pandang **pengguna**: apa yang dapat dil
 
 | ID | Fitur | 🏫 Pihak Sekolah | 🎒 Siswa | Status |
 |:--:|---|:--:|:--:|:--:|
-| FT-01 | Login | ✅ | ✅ | ✅ |
+| FT-01 | Login | ✅ | ✅ | ⚠️ |
 | FT-02 | Menu sesuai peran | ✅ | ✅ | ✅ |
 | FT-03 | Logout | ✅ | ✅ | ✅ |
 | FT-04 | Unggah berkas CSV | ✅ | — | ✅ |
@@ -87,7 +87,8 @@ Dokumen ini memandang sistem dari sudut pandang **pengguna**: apa yang dapat dil
 | **Aktor** | Pihak Sekolah, Siswa |
 | **Halaman** | Login (halaman awal) |
 | **Cara pakai** | Isi surel dan kata sandi, lalu tekan tombol `Login`. Bila kredensial salah, tampil pesan `email dan password salah` |
-| **Status** | ✅ Tersedia |
+| **Status** | ⚠️ Sebagian |
+| **Keterbatasan** | Tombol `Login` perlu ditekan dua kali; penekanan pertama hanya memunculkan pesan `Logged In As ...` ([KI-10](SRS.md#51-daftar-temuan)) |
 | **Kebutuhan** | [SRS-F-01](SRS.md#srs-f-01--autentikasi-pengguna) |
 | **Rujukan Kode** | `main.py:13-16`, `main.py:120-135` |
 
@@ -332,6 +333,7 @@ Fitur berikut belum tersedia, diurutkan menurut prioritas penanganan. Urutan men
 
 | Fitur | Alasan | Rujukan |
 |---|---|---|
+| **Perbaikan alur login** | Tombol `Login` perlu ditekan dua kali sehingga pengguna mengira login gagal. Dapat diselesaikan dengan memindahkan penentuan cabang tampilan setelah pemrosesan tombol | [KI-10](SRS.md#51-daftar-temuan) |
 | **Validasi berkas CSV** | Mencegah galat teknis tampil kepada pengguna dan memberi petunjuk perbaikan yang jelas | [FT-15](#ft-15--validasi-berkas-csv), [KI-03](SRS.md#51-daftar-temuan) |
 | **Surel siswa yang dijamin unik** | Mencegah dua siswa dengan dua kata pertama nama yang sama hanya memperoleh satu akun | [KI-04](SRS.md#51-daftar-temuan) |
 | **Pemaksaan penggantian kata sandi bawaan** | Seluruh siswa memiliki kata sandi awal yang sama, sehingga siapa pun dapat masuk ke akun siswa lain | [SRS-NF-05](SRS.md#srs-nf-05--keamanan) |
