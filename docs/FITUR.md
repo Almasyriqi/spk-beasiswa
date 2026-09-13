@@ -8,8 +8,7 @@
 <br/>
 
 ![Fitur](https://img.shields.io/badge/total%20fitur-17-blue?style=flat-square)
-![Terimplementasi](https://img.shields.io/badge/terimplementasi-14-success?style=flat-square)
-![Sebagian](https://img.shields.io/badge/sebagian-1-orange?style=flat-square)
+![Terimplementasi](https://img.shields.io/badge/terimplementasi-15-success?style=flat-square)
 ![Belum](https://img.shields.io/badge/belum-2-lightgrey?style=flat-square)
 
 </div>
@@ -36,8 +35,8 @@ Dokumen ini memandang sistem dari sudut pandang **pengguna**: apa yang dapat dil
 
 | Lambang | Arti | Jumlah |
 |:--:|---|:--:|
-| ✅ | **Tersedia** — fitur dapat dipakai sebagaimana dijelaskan | 14 |
-| ⚠️ | **Sebagian** — fitur dapat dipakai namun memiliki keterbatasan yang diketahui | 1 |
+| ✅ | **Tersedia** — fitur dapat dipakai sebagaimana dijelaskan | 15 |
+| ⚠️ | **Sebagian** — fitur dapat dipakai namun memiliki keterbatasan yang diketahui | 0 |
 | 📋 | **Belum tersedia** — fitur direncanakan, belum diimplementasikan | 2 |
 | | **Total** | **17** |
 
@@ -47,7 +46,7 @@ Dokumen ini memandang sistem dari sudut pandang **pengguna**: apa yang dapat dil
 |---|:--:|:--:|:--:|:--:|
 | 🔐 Autentikasi & Sesi | 3 | 3 | — | — |
 | 📥 Manajemen Data | 3 | 2 | — | 1 |
-| 🧮 Perhitungan MOORA | 4 | 3 | 1 | — |
+| 🧮 Perhitungan MOORA | 4 | 4 | — | — |
 | 📢 Publikasi Hasil | 3 | 3 | — | — |
 | 👤 Manajemen Akun | 3 | 2 | — | 1 |
 | ⚙️ Infrastruktur | 1 | 1 | — | — |
@@ -65,7 +64,7 @@ Dokumen ini memandang sistem dari sudut pandang **pengguna**: apa yang dapat dil
 | FT-05 | Unduh template CSV | ✅ | — | ✅ |
 | FT-06 | Jalankan analisis MOORA | ✅ | — | ✅ |
 | FT-07 | Lihat tabel tiap tahap perhitungan | ✅ | — | ✅ |
-| FT-08 | Lihat tabel perangkingan | ✅ | — | ⚠️ |
+| FT-08 | Lihat tabel perangkingan | ✅ | — | ✅ |
 | FT-09 | Simpan hasil ke basis data | ✅ | — | ✅ |
 | FT-10 | Lihat pengumuman penerima | ✅ | ✅ | ✅ |
 | FT-11 | Akun siswa dibuat otomatis | ✅ | — | ✅ |
@@ -183,7 +182,7 @@ Dokumen ini memandang sistem dari sudut pandang **pengguna**: apa yang dapat dil
 | **Cara pakai** | Tabel tampil otomatis setelah tombol `Analisis MOORA` ditekan |
 | **Status** | ✅ Tersedia |
 | **Kebutuhan** | [SRS-F-06](SRS.md#srs-f-06--penyajian-tabel-setiap-tahap-perhitungan) |
-| **Rujukan Kode** | `moora.py:17-18`, `moora.py:27-28`, `moora.py:53-54` |
+| **Rujukan Kode** | `moora.py:17-18`, `moora.py:27-28`, `moora.py:51-52` |
 
 ### FT-08 · Tabel Perangkingan
 
@@ -192,10 +191,9 @@ Dokumen ini memandang sistem dari sudut pandang **pengguna**: apa yang dapat dil
 | **Deskripsi** | Menampilkan daftar alternatif terurut menurun berdasarkan nilai `Yi`, dilengkapi kolom nomor peringkat |
 | **Aktor** | Pihak Sekolah |
 | **Halaman** | Input |
-| **Status** | ⚠️ Sebagian |
-| **Keterbatasan** | Nilai `Yi` tersimpan sebagai teks akibat penggabungan array, sehingga pengurutan berpotensi leksikografis dan peringkat dapat salah pada data tertentu ([KI-01](SRS.md#51-daftar-temuan)) |
+| **Status** | ✅ Tersedia |
 | **Kebutuhan** | [SRS-F-07](SRS.md#srs-f-07--perangkingan-alternatif) |
-| **Rujukan Kode** | `moora.py:46-56` |
+| **Rujukan Kode** | `moora.py:46-54` |
 
 ### FT-14 · Kriteria Dinamis
 
@@ -328,7 +326,6 @@ Fitur berikut belum tersedia, diurutkan menurut prioritas penanganan. Urutan men
 
 | Fitur | Alasan | Rujukan |
 |---|---|---|
-| **Perbaikan pengurutan peringkat** | Satu-satunya temuan yang dapat membuat *hasil* sistem salah. Nilai `Yi` perlu dipertahankan sebagai tipe numerik agar pengurutan benar | [KI-01](SRS.md#51-daftar-temuan) |
 | **Penyimpanan kata sandi ter-*hash*** | Kata sandi saat ini tersimpan sebagai teks biasa dan terbaca bila berkas basis data bocor. Memerlukan migrasi data yang sudah ada | [KI-02](SRS.md#51-daftar-temuan) |
 
 ### 🟠 Prioritas sedang

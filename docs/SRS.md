@@ -388,7 +388,7 @@ Sistem tidak berinteraksi langsung dengan perangkat keras khusus. Kebutuhan mini
 | **Pascakondisi** | Ketiga tabel tampil berurutan pada halaman `Input` |
 | **Prioritas** | Wajib |
 | **Status** | ✅ Terimplementasi |
-| **Rujukan Kode** | `moora.py:17-18`, `moora.py:27-28`, `moora.py:53-54` |
+| **Rujukan Kode** | `moora.py:17-18`, `moora.py:27-28`, `moora.py:51-52` |
 
 ### SRS-F-07 · Perangkingan Alternatif
 
@@ -397,11 +397,11 @@ Sistem tidak berinteraksi langsung dengan perangkat keras khusus. Kebutuhan mini
 | **Aktor** | Pihak Sekolah |
 | **Deskripsi** | Sistem mengurutkan alternatif berdasarkan nilai `Yi` secara menurun dan memberikan nomor peringkat mulai dari `1` |
 | **Prakondisi** | Nilai `Yi` setiap alternatif telah dihitung (SRS-F-05) |
-| **Alur** | 1. Sistem menggabungkan nama alternatif dengan nilai `Yi` · 2. Sistem mengurutkan data secara menurun berdasarkan `Yi` · 3. Sistem memberi nomor peringkat `1` hingga `n` sesuai urutan hasil |
+| **Alur** | 1. Sistem menyusun tabel berisi nama alternatif dan nilai `Yi`, masing-masing dengan tipe datanya sendiri · 2. Sistem mengurutkan tabel secara menurun berdasarkan `Yi` · 3. Sistem memberi nomor peringkat `1` hingga `n` sesuai urutan hasil |
 | **Pascakondisi** | Tabel perangkingan tersedia dengan kolom `Alternatif`, `Yi`, dan `Ranking` |
 | **Prioritas** | Wajib |
-| **Status** | ⚠️ Sebagian — pengurutan berpotensi tidak numerik (lihat KI-01) |
-| **Rujukan Kode** | `moora.py:46-56` |
+| **Status** | ✅ Terimplementasi |
+| **Rujukan Kode** | `moora.py:46-54` |
 
 ### SRS-F-08 · Pembuatan Akun Siswa Otomatis
 
@@ -680,8 +680,8 @@ Setiap kebutuhan fungsional dipetakan ke fitur pada [FITUR.md](FITUR.md), berkas
 | SRS-F-03 Logout | FT-03 | `main.py:112-118` | ⚠️ | KI-05 |
 | SRS-F-04 Unggah CSV | FT-04 | `main.py:137-143` | ✅ | KI-03 |
 | SRS-F-05 Perhitungan MOORA | FT-06 | `moora.py:5-43` | ✅ | — |
-| SRS-F-06 Tabel tiap tahap | FT-07 | `moora.py:17-18`, `27-28`, `53-54` | ✅ | — |
-| SRS-F-07 Perangkingan | FT-08 | `moora.py:46-56` | ⚠️ | KI-01 |
+| SRS-F-06 Tabel tiap tahap | FT-07 | `moora.py:17-18`, `27-28`, `51-52` | ✅ | — |
+| SRS-F-07 Perangkingan | FT-08 | `moora.py:46-54` | ✅ | — |
 | SRS-F-08 Akun otomatis | FT-11 | `main.py:28-55`, `147-159` | ✅ | KI-04 |
 | SRS-F-09 Simpan hasil | FT-09 | `main.py:57-65` | ✅ | KI-06 |
 | SRS-F-10 Pengumuman | FT-10 | `main.py:67-70`, `163-178` | ✅ | KI-07 |
@@ -696,8 +696,8 @@ Setiap kebutuhan fungsional dipetakan ke fitur pada [FITUR.md](FITUR.md), berkas
 
 | Status | Jumlah | Kebutuhan |
 |---|:--:|---|
-| ✅ Terimplementasi | 12 | SRS-F-01, 02, 04, 05, 06, 08, 09, 10, 11, 12, 13, 16 |
-| ⚠️ Sebagian | 2 | SRS-F-03, 07 |
+| ✅ Terimplementasi | 13 | SRS-F-01, 02, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 16 |
+| ⚠️ Sebagian | 1 | SRS-F-03 |
 | 📋 Belum | 2 | SRS-F-14, 15 |
 | **Total** | **16** | — |
 
@@ -711,27 +711,29 @@ Bab ini mencatat selisih antara kebutuhan yang dirumuskan dan kondisi kode saat 
 
 ## 5.1 Daftar Temuan
 
-| ID | Temuan | Lokasi | Dampak | Prioritas |
-|:--:|---|---|---|:--:|
-| **KI-01** | `np.stack` menggabungkan array nama (bertipe teks) dengan nilai `Yi` (bertipe pecahan), sehingga array hasil bertipe teks. Akibatnya kolom `Yi` pada `DataFrame` berisi teks dan `sort_values("Yi")` berpotensi mengurutkan secara leksikografis, bukan numerik | `moora.py:46-51` | Urutan peringkat dapat salah pada data tertentu, misalnya `"9.5"` dianggap lebih besar daripada `"10.2"` | 🔴 Tinggi |
-| **KI-02** | Kata sandi disimpan dan dibandingkan sebagai teks biasa | `main.py:14`, `19`, `22`, `39`, `53` | Seluruh kata sandi terbaca bila berkas basis data bocor | 🔴 Tinggi |
-| **KI-03** | Tidak ada validasi berkas CSV; struktur yang menyimpang menimbulkan *exception* yang tampil sebagai galat mentah | `main.py:142`, `moora.py:7-10` | Pengguna menghadapi pesan galat teknis tanpa petunjuk perbaikan | 🟠 Sedang |
-| **KI-04** | Surel siswa dibentuk dari dua kata pertama nama | `main.py:148-155` | Dua siswa dengan dua kata pertama nama yang sama hanya menghasilkan satu akun | 🟠 Sedang |
-| **KI-05** | `LoggedOut_Clicked` hanya mengatur `loggedIn`, nilai `role` tetap tersimpan pada sesi | `main.py:112-113` | Sisa status peran pada sesi setelah logout | 🟡 Rendah |
-| **KI-06** | Tabel `hasil` dikosongkan setiap analisis dijalankan | `main.py:59-61` | Riwayat seleksi periode sebelumnya hilang | 🟡 Rendah |
-| **KI-07** | Jumlah penerima yang diumumkan dipatok `5` pada kode | `main.py:173` | Kuota penerima tidak dapat diubah tanpa menyunting kode | 🟡 Rendah |
-| **KI-08** | `requirements.txt` tidak mencantumkan `pandas` dan `numpy`, keduanya ikut sebagai dependensi transitif Streamlit | `requirements.txt` | Pemasangan dapat gagal bila versi Streamlit diganti | 🟡 Rendah |
-| **KI-09** | Singkatan rating kecocokan memakai `(T)` untuk "Baik" dan `(ST)` untuk "Sangat Baik", mengikuti pola tabel tingkat kepentingan | `home.py:58-59` | Ketidakkonsistenan label pada antarmuka | 🟢 Kosmetik |
+| ID | Temuan | Lokasi | Dampak | Prioritas | Status |
+|:--:|---|---|---|:--:|:--:|
+| **KI-01** | `np.stack` menyatukan kolom nama dan kolom `Yi` ke dalam satu array, sehingga kolom `Yi` pada `DataFrame` bertipe `object`, bukan numerik | `moora.py:46-51` (sebelum perbaikan) | Tipe kolom bergantung pada aturan promosi tipe NumPy, dan nilai `Yi` masuk ke kolom `REAL` lewat konversi implisit. **Urutan peringkat tetap benar** — lihat catatan di bawah tabel | 🟡 Rendah | ✅ Selesai |
+| **KI-02** | Kata sandi disimpan dan dibandingkan sebagai teks biasa | `main.py:14`, `19`, `22`, `39`, `53` | Seluruh kata sandi terbaca bila berkas basis data bocor | 🔴 Tinggi | ⏳ Terbuka |
+| **KI-03** | Tidak ada validasi berkas CSV; struktur yang menyimpang menimbulkan *exception* yang tampil sebagai galat mentah | `main.py:142`, `moora.py:7-10` | Pengguna menghadapi pesan galat teknis tanpa petunjuk perbaikan | 🟠 Sedang | ⏳ Terbuka |
+| **KI-04** | Surel siswa dibentuk dari dua kata pertama nama | `main.py:148-155` | Dua siswa dengan dua kata pertama nama yang sama hanya menghasilkan satu akun | 🟠 Sedang | ⏳ Terbuka |
+| **KI-05** | `LoggedOut_Clicked` hanya mengatur `loggedIn`, nilai `role` tetap tersimpan pada sesi | `main.py:112-113` | Sisa status peran pada sesi setelah logout | 🟡 Rendah | ⏳ Terbuka |
+| **KI-06** | Tabel `hasil` dikosongkan setiap analisis dijalankan | `main.py:59-61` | Riwayat seleksi periode sebelumnya hilang | 🟡 Rendah | ⏳ Terbuka |
+| **KI-07** | Jumlah penerima yang diumumkan dipatok `5` pada kode | `main.py:173` | Kuota penerima tidak dapat diubah tanpa menyunting kode | 🟡 Rendah | ⏳ Terbuka |
+| **KI-08** | `requirements.txt` tidak mencantumkan `pandas` dan `numpy`, keduanya ikut sebagai dependensi transitif Streamlit | `requirements.txt` | Pemasangan dapat gagal bila versi Streamlit diganti | 🟡 Rendah | ⏳ Terbuka |
+| **KI-09** | Singkatan rating kecocokan memakai `(T)` untuk "Baik" dan `(ST)` untuk "Sangat Baik", mengikuti pola tabel tingkat kepentingan | `home.py:58-59` | Ketidakkonsistenan label pada antarmuka | 🟢 Kosmetik | ⏳ Terbuka |
+
+> 📌 **Koreksi atas KI-01.** Pada penyusunan dokumen versi 1.0, temuan ini dinyatakan dapat membuat urutan peringkat salah. Pengujian langsung terhadap `metodeMoora` membuktikan pernyataan tersebut **keliru**: karena `dataframe.iloc[2:,0].values` menghasilkan array bertipe `object` (bukan teks), `np.stack` mempertahankan nilai `Yi` sebagai bilangan, sehingga `sort_values` tetap mengurutkan secara numerik dan peringkat yang dihasilkan benar. Diverifikasi pada pandas 1.5.3/NumPy 1.24.4 maupun pandas 3.0.5/NumPy 2.4.6 dengan data `template.csv` dan beberapa kasus tepi. Yang tersisa hanyalah persoalan ketepatan tipe, sehingga prioritasnya diturunkan dari 🔴 Tinggi menjadi 🟡 Rendah. Perbaikan tetap diterapkan agar kolom `Yi` bertipe `float64` dan tidak bergantung pada aturan promosi tipe NumPy.
 
 ## 5.2 Urutan Penanganan yang Disarankan
 
 | Urutan | Temuan | Alasan |
 |:--:|---|---|
-| 1 | **KI-01** | Satu-satunya temuan yang dapat membuat *hasil* sistem salah, bukan sekadar menyangkut kualitas kode atau keamanan |
-| 2 | **KI-02** | Risiko keamanan terbesar; memerlukan migrasi data kata sandi yang sudah ada |
-| 3 | **KI-03** | Berdampak langsung pada pengalaman pengguna dan mencegah kegagalan saat data tidak sesuai |
-| 4 | **KI-04**, **KI-08** | Perbaikan kecil dengan cakupan terbatas |
-| 5 | **KI-05**, **KI-06**, **KI-07**, **KI-09** | Peningkatan mutu tanpa urgensi |
+| 1 | **KI-02** | Risiko keamanan terbesar; memerlukan migrasi data kata sandi yang sudah ada |
+| 2 | **KI-03** | Berdampak langsung pada pengalaman pengguna dan mencegah kegagalan saat data tidak sesuai |
+| 3 | **KI-04**, **KI-08** | Perbaikan kecil dengan cakupan terbatas |
+| 4 | **KI-05**, **KI-06**, **KI-07**, **KI-09** | Peningkatan mutu tanpa urgensi |
+| — | ~~**KI-01**~~ | Sudah diperbaiki — lihat catatan koreksi pada 5.1 |
 
 ---
 
@@ -740,6 +742,7 @@ Bab ini mencatat selisih antara kebutuhan yang dirumuskan dan kondisi kode saat 
 | Versi | Tanggal | Perubahan | Penyusun |
 |:---:|---|---|---|
 | 1.0 | 2026-09-12 | Penyusunan awal dokumen berdasarkan pembacaan kode sumber pada commit `e1e6a19` | Tim Pengembang |
+| 1.1 | 2026-09-13 | Koreksi KI-01 setelah pengujian langsung: urutan peringkat ternyata sudah benar, prioritas diturunkan ke 🟡 Rendah dan temuan ditutup setelah tipe kolom `Yi` diperbaiki · SRS-F-07 ⚠️ → ✅ · penyesuaian rujukan baris `moora.py` | Tim Pengembang |
 
 ---
 
