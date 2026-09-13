@@ -44,11 +44,9 @@ def metodeMoora(dataframe ):
     
     # Perangkingan
     list_alternatif = dataframe.iloc[2:,0].values
-    nilai = np.stack((list_alternatif, result_yi), axis=1)
-    rank = list(range(1,list_alternatif.shape[0]+1))
-    df_ranking = pd.DataFrame(nilai, columns=['Alternatif', 'Yi'])
-    df_ranking = df_ranking.sort_values("Yi", ascending=False)
-    df_ranking['Ranking'] = rank
+    df_ranking = pd.DataFrame({'Alternatif': list_alternatif, 'Yi': result_yi})
+    df_ranking = df_ranking.sort_values("Yi", ascending=False).reset_index(drop=True)
+    df_ranking['Ranking'] = range(1, len(df_ranking) + 1)
     
     st.write("### Hasil Perangkingan Metode MOORA")
     st.dataframe(df_ranking)

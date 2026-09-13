@@ -263,7 +263,7 @@ flowchart TD
 
 Alur inti perhitungan, dengan perulangan digambarkan eksplisit.
 
-> 🔖 Sumber: `moora.py:5-56`
+> 🔖 Sumber: `moora.py:5-54`
 
 ```mermaid
 flowchart TD
@@ -305,9 +305,9 @@ flowchart TD
 | Akumulasi *benefit* | `temp_max_i = Σ v_ij` untuk `atribut_j = 1` | `moora.py:36-37` |
 | Akumulasi *cost* | `temp_min_i = Σ v_ij` untuk `atribut_j = 0` | `moora.py:38-39` |
 | Nilai akhir | `Y_i = temp_max_i − temp_min_i` | `moora.py:42-43` |
-| Perangkingan | Urutkan `Y_i` menurun, beri peringkat `1`–`n` | `moora.py:46-51` |
+| Perangkingan | Urutkan `Y_i` menurun, beri peringkat `1`–`n` | `moora.py:46-49` |
 
-> ⚠️ Pada tahap **Gabungkan**, `np.stack` menyatukan array nama bertipe teks dengan nilai `Yi` bertipe pecahan sehingga seluruh array menjadi bertipe teks. Pengurutan setelahnya berpotensi leksikografis, bukan numerik. Lihat [KI-01](SRS.md#51-daftar-temuan).
+> ℹ️ Pada tahap **Gabungkan**, tabel perangkingan dibentuk langsung dari kolom nama dan kolom `Yi` sehingga masing-masing mempertahankan tipe datanya. Kolom `Yi` bertipe `float64`, sehingga pengurutannya numerik. Lihat [KI-01](SRS.md#51-daftar-temuan) untuk riwayat temuan ini.
 
 ---
 
